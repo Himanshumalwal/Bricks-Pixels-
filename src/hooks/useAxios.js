@@ -5,7 +5,7 @@ const useAxios = (param) => {
   const [response, setResponse] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   axios.defaults.baseURL = 'https://api.unsplash.com';
 
   const fetchData = async (url) => {
@@ -13,7 +13,7 @@ const useAxios = (param) => {
       setIsLoading(true);
       const res = await axios(url);
       setResponse(res.data.results);
-    } catch(err) {
+    } catch (err) {
       setError(err)
     } finally {
       setIsLoading(false)
@@ -28,7 +28,8 @@ const useAxios = (param) => {
     response,
     isLoading,
     error,
-    fetchData: url => fetchData(url)
+    fetchData
+    // fetchData: (url) => { return fetchData(url) }
   }
 }
 
