@@ -25,6 +25,7 @@ function App() {
     setSearchImage
   }
 
+// console.log(response)
   return (
 
     <>

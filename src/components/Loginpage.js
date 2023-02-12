@@ -5,39 +5,59 @@ const Loginpage = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const [flag, setFlag] = useState(false);
+    const [users, setuser] = useState([]);
+    
 
-    const users = []
-    const onClick = () => {
-        if (email && password) {
-            setFlag(false)
-            for (let index = 0; index < users.length; index++) {
-                const user = users[index];
-                console.log(user.userid, email, typeof (user.userid), typeof (email))
-                if (user.userid === email) {
-                    setFlag(true)
-                    console.log(user.password, user.password === password)
-                    if (user.password === password) {
-                        props.setislogin(true)
-                    } else {
-                        setFlag(true)
-                        setMessage("password is wrong")
-                    }
-                }
-            }
-            if (!flag) {
-                console.log(flag)
-                users.push({
-                    userid: email,
-                    password: password
-                })
-                setMessage("user has been registered")
-            }
-            console.log(users)
-        }
-        else {
+    const Register = () => {
+        if (email === '' && password === '') {
             setMessage("enter email and password")
+            return
         }
+
+        for (let index = 0; index < users.length; index++) {
+            let user = users[index];
+            if (user.userid === email) {
+                setMessage("User already exist")
+                return
+            }
+        }
+
+
+        const temp = [...users]
+        temp.push({
+            userid: email,
+            password: password
+        })
+        setuser(temp)
+        setMessage("user has been registered")
+    }
+
+    const Login = () => {
+        if (email === '' && password === '') {
+            setMessage("enter email and password")
+            return
+        }
+
+        // if (email !='' && password !='') {
+        for (let index = 0; index < users.length; index++) {
+            let user = users[index];
+            if (user.userid === email) {
+                if (user.password === password) {
+                    props.setislogin(true)
+                } else {
+                    setMessage("password is wrong")
+                }
+                return
+            }
+            // }
+
+             
+
+            // console.log(users)
+        }
+
+        setMessage("User does not exist")
+
     }
     return (
         <>
@@ -59,11 +79,19 @@ const Loginpage = (props) => {
       }} className="border text-[blue] py-2 px-5 cursor-pointer rounded mt-2">
         Sign Up
       </div> */}
-                <div className="border bg-[blue] text-[white] py-2 px-5 cursor-pointer rounded mt-2" onClick={() => { onClick() }}>
-                    Submit
+      <div className='flex'>
+
+                <div className="border bg-[blue] text-[white] py-2 px-5 cursor-pointer rounded mt-2 mr-2" onClick={() => { Login() }}>
+                    Login
                 </div>
+
+                <div className="border bg-[blue] text-[white] py-2 px-5 cursor-pointer rounded mt-2 ml-2" onClick={() => { Register() }} >
+                    SignUp
+                </div>
+      </div>
+
                 <div className='text-[black]'>
-                    {message && message}
+                    {message}
                 </div>
             </div>
         </>
