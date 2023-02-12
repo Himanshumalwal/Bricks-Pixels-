@@ -4,6 +4,7 @@ import Jumbutron from "./components/Jumbutron";
 import SearchField from "./components/SearchField";
 import useAxios from "./hooks/useAxios";
 import Loginpage from "./components/Loginpage";
+import { motion } from "framer-motion"
 
 // Create Context
 export const ImageContext = createContext();
@@ -30,13 +31,22 @@ function App() {
 
     <>
     
-      {islog ? <ImageContext.Provider value={value}>
+      {islog ?  <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 1 }}
+  >
+      
+      <ImageContext.Provider value={value}>
+
       
       <Jumbutron>
         <SearchField />
       </Jumbutron>
       <Images />
-    </ImageContext.Provider> :
+    </ImageContext.Provider>
+    </motion.div> :
+
     <Loginpage islog={islog} setislogin={setislogin}/> 
     }
     
